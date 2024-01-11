@@ -7,16 +7,18 @@ export default function NetlifyInquiryForm() {
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       hidden
+      aria-hidden="true"
     >
       {/* Netlify form identifier */}
       <input type="hidden" name="form-name" value="artwork-inquiry" />
 
       {/* Honeypot */}
-      <p hidden>
-        <label>
-          Don’t fill this out: <input name="bot-field" />
-        </label>
-      </p>
+      <input
+        type="text"
+        name="bot-field"
+        tabIndex={-1}
+        autoComplete="off"
+      />
 
       {/* Context fields */}
       <input type="hidden" name="artworkTitle" />
