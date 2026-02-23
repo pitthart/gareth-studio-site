@@ -23,12 +23,13 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
   const prev = currentIndex > 0 ? seriesWorks[currentIndex - 1] : null;
   const next = currentIndex < seriesWorks.length - 1 ? seriesWorks[currentIndex + 1] : null;
 
-  // Prefer full image, but never crash if it's missing.
-  const fullSrc = (piece as any).imageFull ?? (piece as any).image;
+  // You now have imageFull + imageDetail in lib/artworks.ts
+  // Use full view for the artwork page.
+  const fullSrc = piece.imageFull;
 
   return (
     <main className="min-h-screen bg-stone-100">
-      <div className="mx-auto max-w-6xl px-6 pt-14 pb-14">
+      <div className="mx-auto max-w-5xl px-6 pt-14 pb-14 md:px-10">
         {/* Breadcrumb */}
         <div className="mb-8 text-xs text-stone-500">
           <Link href="/work" className="hover:text-stone-700" scroll={false}>
@@ -74,21 +75,13 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
 
             {/* Inquiry */}
             <div className="mb-5 text-right">
-              <InquiryButton
-                artworkTitle={piece.title}
-                artworkSlug={piece.slug}
-                series={piece.series}
-              />
+              <InquiryButton artworkTitle={piece.title} artworkSlug={piece.slug} series={piece.series} />
             </div>
 
             {/* Navigation */}
             <div className="flex justify-between text-[11px] text-stone-500 border-t border-stone-200 pt-3">
               {prev ? (
-                <Link
-                  href={`/artwork/${prev.slug}`}
-                  scroll={false}
-                  className="hover:text-stone-800"
-                >
+                <Link href={`/artwork/${prev.slug}`} scroll={false} className="hover:text-stone-800">
                   ← {prev.title}
                 </Link>
               ) : (
@@ -96,11 +89,7 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
               )}
 
               {next ? (
-                <Link
-                  href={`/artwork/${next.slug}`}
-                  scroll={false}
-                  className="hover:text-stone-800 ml-auto"
-                >
+                <Link href={`/artwork/${next.slug}`} scroll={false} className="hover:text-stone-800 ml-auto">
                   {next.title} →
                 </Link>
               ) : null}

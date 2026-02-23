@@ -90,8 +90,9 @@ export default function InquiryModal({
       setName("");
       setEmail("");
       setMessage("");
-    } catch (err: any) {
-      setError("Could not send. Please email instead.");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      setError(message);
     } finally {
       setSending(false);
     }

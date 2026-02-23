@@ -2,11 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-const studioNotes = [
-  { date: "2026.01", text: ["Notes.", "Fragments.", "In progress."] },
-  { date: "—", text: ["Object.", "Signal.", "Interruption."] },
-];
-
 export default function StudioPage() {
   return (
     <main className="min-h-screen bg-stone-100 px-6 pt-14 pb-28">
