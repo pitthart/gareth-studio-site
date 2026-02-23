@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+:root {
+  --ai-blue: #2563eb;
+  --ai-blue-light: #60a5fa;
+  --vermillion: #e34234;
+  --sand: #f7f3ee;
+  --ink: #111111;
+}
+
+/* =========
+   BASE RESET
+   ========= */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply box-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 font-sans antialiased;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-normal tracking-tight text-gray-900;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    @apply text-gray-800 hover:text-gray-600 transition-colors;
+  }
+
+  p {
+    @apply text-gray-600;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  img {
+    border-radius: 1px;
+  }
+}
+
+/* =========
+   COMPONENTS
+   ========= */
+@layer components {
+  .card {
+    @apply bg-white border border-gray-200 rounded-[1px] shadow-sm p-6;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md font-medium;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-primary {
+    @apply bg-gray-900 text-white hover:bg-gray-800 px-4 py-2;
+  }
+
+  .btn-outline {
+    @apply border border-gray-400 text-gray-800 hover:bg-gray-100 px-4 py-2;
+  }
+
+  .badge {
+    @apply text-xs px-2 py-0.5 rounded-full border border-gray-300 text-gray-700 bg-gray-50;
+  }
+
+  .section {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .title {
+    @apply font-normal tracking-tight text-gray-900;
+    letter-spacing: -0.01em;
+  }
+
+  .title-xl {
+    @apply text-5xl sm:text-6xl;
+  }
+
+  .title-lg {
+    @apply text-3xl sm:text-4xl;
+  }
+}
+
+/* =========
+   UTILITIES
+   ========= */
+@layer utilities {
+  /* Interior pages: consistent indentation like Transmission screenshot */
+  .page-shell {
+    @apply min-h-screen bg-stone-100 px-6 pt-14 pb-28;
+  }
+
+  .page-wrap {
+    @apply mx-auto max-w-6xl md:px-10;
+  }
+
+  /* Subtle entrance animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600;
+  }
+
+  .divider {
+    @apply border-t border-gray-200 my-6;
+  }
+
+  .text-muted {
+    @apply text-gray-600;
+  }
+
+  [id] {
+    scroll-margin-top: 3rem;
+  }
+
+  .art-image {
+    border-radius: 3px !important;
+  }
+
+  /* Rhythm helpers you already use */
+  .page-x {
+    @apply px-6 md:px-10;
+  }
+
+  .page-pad {
+    @apply pt-10 pb-16 md:pt-14 md:pb-20;
+  }
+
+  .band-s {
+    @apply py-6 md:py-8;
+  }
+
+  .band-m {
+    @apply py-10 md:py-12;
+  }
+
+  .band-l {
+    @apply py-14 md:py-16;
+  }
+
+  .band-divider {
+    @apply border-t border-gray-200 pt-10 md:pt-12;
+  }
+
+  .kicker {
+    @apply text-[11px] uppercase tracking-[0.18em] text-gray-500 leading-none;
+  }
+
+  .subhead {
+    @apply text-[13px] md:text-sm text-gray-600 leading-snug mt-2;
+  }
+
+  .h1 {
+    @apply font-normal tracking-tight text-gray-900 leading-tight;
+  }
+
+  .h1-lg {
+    @apply text-3xl md:text-4xl;
+  }
+
+  .h2 {
+    @apply font-normal tracking-tight text-gray-900 leading-tight;
+  }
+
+  .h2-lg {
+    @apply text-2xl md:text-3xl;
+  }
+
+  .footer-grid {
+    @apply grid grid-cols-2 gap-x-12 gap-y-6 md:grid-cols-4 md:gap-y-0;
+  }
+
+  .footer-list {
+    @apply space-y-1;
+  }
+}
