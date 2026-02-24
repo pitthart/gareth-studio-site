@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Netlify Forms</title>
+  </head>
+  <body>
+    <!--
+      Hidden “ghost form” so Netlify can detect it at build time.
+      Must match:
+      - form name: artwork-inquiry
+      - field names used in your POST body
+    -->
+    <form
+      name="artwork-inquiry"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/"
+    >
+      <input type="hidden" name="form-name" value="artwork-inquiry" />
+
+      <!-- Honeypot -->
+      <p style="display:none;">
+        <label>
+          Don’t fill this out:
+          <input name="bot-field" />
+        </label>
+      </p>
+
+      <!-- Context fields (match your encode() keys) -->
+      <input type="text" name="artworkTitle" />
+      <input type="text" name="artworkSlug" />
+      <input type="text" name="series" />
+      <input type="text" name="pageUrl" />
+
+      <!-- User fields -->
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+
+      <button type="submit">Send</button>
+    </form>
+  </body>
+</html>
