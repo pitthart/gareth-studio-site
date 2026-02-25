@@ -1,30 +1,40 @@
 // app/artwork/[slug]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getArtworkBySlug, getArtworksBySeries, artworks } from "@/lib/artworks";
+import {
+  getArtworkBySlug,
+  getArtworksBySeries,
+  artworks,
+} from "@/lib/artworks";
 import InquiryButton from "@/components/InquiryButton";
 import ArtworkImageWithLightbox from "@/components/ArtworkImageWithLightbox";
 
-interface ArtworkPageProps {
-  params: { slug: string };
-}
+type ArtworkPageProps = {
+  params: Promise<{ slug: string }>;
+};
 
 export function generateStaticParams() {
   return artworks.map((art) => ({ slug: art.slug }));
 }
 
-export default function ArtworkPage({ params }: ArtworkPageProps) {
-  const piece = getArtworkBySlug(params.slug);
+export default async function ArtworkPage({ params }: ArtworkPageProps) {
+  const { slug } = await params;
+
+  const piece = getArtworkBySlug(slug);
   if (!piece) return notFound();
 
   const seriesWorks = getArtworksBySeries(piece.series);
-  const currentIndex = seriesWorks.findIndex((a) => a.slug === piece.slug);
+  const currentIndex = seriesWorks.findIndex(
+    (a) => a.slug === piece.slug
+  );
 
-  const prev = currentIndex > 0 ? seriesWorks[currentIndex - 1] : null;
-  const next = currentIndex < seriesWorks.length - 1 ? seriesWorks[currentIndex + 1] : null;
+  const prev =
+    currentIndex > 0 ? seriesWorks[currentIndex - 1] : null;
+  const next =
+    currentIndex < seriesWorks.length - 1
+      ? seriesWorks[currentIndex + 1]
+      : null;
 
-  // You now have imageFull + imageDetail in lib/artworks.ts
-  // Use full view for the artwork page.
   const fullSrc = piece.imageFull;
 
   return (
@@ -51,7 +61,10 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
           {/* Image */}
           <div className="relative">
             <div className="rounded-[10px] bg-stone-200/60 p-4 md:p-5 ring-1 ring-stone-200">
-              <ArtworkImageWithLightbox src={fullSrc} alt={piece.title} />
+              <ArtworkImageWithLightbox
+                src={fullSrc}
+                alt={piece.title}
+              />
             </div>
           </div>
 
@@ -75,13 +88,21 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
 
             {/* Inquiry */}
             <div className="mb-5 text-right">
-              <InquiryButton artworkTitle={piece.title} artworkSlug={piece.slug} series={piece.series} />
+              <InquiryButton
+                artworkTitle={piece.title}
+                artworkSlug={piece.slug}
+                series={piece.series}
+              />
             </div>
 
             {/* Navigation */}
             <div className="flex justify-between text-[11px] text-stone-500 border-t border-stone-200 pt-3">
               {prev ? (
-                <Link href={`/artwork/${prev.slug}`} scroll={false} className="hover:text-stone-800">
+                <Link
+                  href={`/artwork/${prev.slug}`}
+                  scroll={false}
+                  className="hover:text-stone-800"
+                >
                   ← {prev.title}
                 </Link>
               ) : (
@@ -89,7 +110,11 @@ export default function ArtworkPage({ params }: ArtworkPageProps) {
               )}
 
               {next ? (
-                <Link href={`/artwork/${next.slug}`} scroll={false} className="hover:text-stone-800 ml-auto">
+                <Link
+                  href={`/artwork/${next.slug}`}
+                  scroll={false}
+                  className="hover:text-stone-800 ml-auto"
+                >
                   {next.title} →
                 </Link>
               ) : null}

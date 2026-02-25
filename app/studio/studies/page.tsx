@@ -8,10 +8,10 @@ const studies = getArtworksBySeries("studies");
 export default function StudiesPage() {
   return (
     <main className="min-h-screen bg-stone-100">
-      <div className="mx-auto max-w-5xl pt-14 pb-24">
+      <div className="mx-auto max-w-5xl px-6 pt-14 pb-24 md:px-10">
         {/* Breadcrumb */}
         <div className="mb-8 text-xs text-stone-500">
-          <Link href="/studio" className="hover:text-stone-700">
+          <Link href="/studio" className="hover:text-stone-700" scroll={false}>
             Studio
           </Link>
           <span className="mx-2">/</span>
@@ -35,7 +35,11 @@ export default function StudiesPage() {
             <div className="grid gap-x-8 gap-y-14 md:grid-cols-3">
               {studies.map((piece) => (
                 <article key={piece.slug} className="group">
-                  <Link href={`/artwork/${piece.slug}`} scroll={false} className="block">
+                  <Link
+                    href={`/artwork/${piece.slug}`}
+                    scroll={false}
+                    className="block"
+                  >
                     <div className="relative w-full aspect-[3/4] overflow-hidden rounded-[6px] bg-stone-200">
                       <Image
                         src={piece.imageDetail}
