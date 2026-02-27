@@ -27,12 +27,13 @@ export default function AboutPage() {
           {/* Text */}
           <div className="space-y-6 text-sm md:text-base text-stone-700 leading-relaxed">
             <p>
-              Gareth Pitt-Hart is an artist working primarily in painting and mixed media.
-His work explores structure, repetition, and symbolic systems—often built through serial processes and physical revision.
+              Gareth Pitt-Hart is a painter working primarily in oil and acrylic, developing large-scale bodies of work defined by pressure, structure, and restraint.
 
-Recent bodies of work investigate vertical form, transmission, and the residue of decision-making across surfaces. Materials include cardboard, paper, acrylic, oil, and chalk pastel.
+His work is built through repetition, pressure, and revision—where vertical forms emerge from accumulation rather than design. Surfaces carry the record of force: abrasion, concealment, interruption.
 
-Gareth lives and works in the United States.
+Working across canvas, cardboard, and paper, Pitt-Hart develops bodies of work that test structure against collapse. Each painting holds tension between control and surrender, monument and erosion.
+
+He lives and works in Saint Louis.
             </p>
 
             <p>

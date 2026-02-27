@@ -23,15 +23,21 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
   const piece = getArtworkBySlug(slug);
   if (!piece) return notFound();
 
-  const seriesWorks = getArtworksBySeries(piece.series);
-  const currentIndex = seriesWorks.findIndex(
-    (a) => a.slug === piece.slug
-  );
+  // Get the series list (already sorted by your helper),
+  // then defensively de-dupe by slug to prevent arrow weirdness.
+  const seriesWorksRaw = getArtworksBySeries(piece.series);
+  const seen = new Set<string>();
+  const seriesWorks = seriesWorksRaw.filter((a) => {
+    if (seen.has(a.slug)) return false;
+    seen.add(a.slug);
+    return true;
+  });
 
-  const prev =
-    currentIndex > 0 ? seriesWorks[currentIndex - 1] : null;
+  const currentIndex = seriesWorks.findIndex((a) => a.slug === slug);
+
+  const prev = currentIndex > 0 ? seriesWorks[currentIndex - 1] : null;
   const next =
-    currentIndex < seriesWorks.length - 1
+    currentIndex >= 0 && currentIndex < seriesWorks.length - 1
       ? seriesWorks[currentIndex + 1]
       : null;
 
@@ -61,10 +67,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
           {/* Image */}
           <div className="relative">
             <div className="rounded-[10px] bg-stone-200/60 p-4 md:p-5 ring-1 ring-stone-200">
-              <ArtworkImageWithLightbox
-                src={fullSrc}
-                alt={piece.title}
-              />
+              <ArtworkImageWithLightbox src={fullSrc} alt={piece.title} />
             </div>
           </div>
 

@@ -88,7 +88,7 @@ export default function HomePage() {
                   src="/studio-hero.jpg"
                   alt="Studio"
                   fill
-                  className="object-cover grayscale contrast-105 brightness-95"
+                  className="object-cover contrast-80 brightness-95"
                 />
               </div>
             </Link>

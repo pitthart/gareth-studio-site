@@ -6,8 +6,8 @@ const faces = getArtworksBySeries("faces");
 
 export default function FacesArchivePage() {
   return (
-    <main className="min-h-screen bg-stone-100 px-6 pt-14 pb-28">
-      <div className="mx-auto max-w-6xl px-6">
+    <main className="min-h-screen bg-stone-100">
+      <div className="mx-auto max-w-5xl px-6 pt-14 pb-24 md:px-10">
         {/* Breadcrumb */}
         <div className="mb-8 text-xs text-stone-500">
           <Link href="/work" className="hover:text-stone-700">
@@ -32,27 +32,34 @@ export default function FacesArchivePage() {
         </header>
 
         {faces.length === 0 ? (
-          <p className="text-sm text-stone-600">No works in this archive yet.</p>
+          <p className="text-sm text-stone-600">
+            No works in this archive yet.
+          </p>
         ) : (
           <section
             aria-label="Faces archive works"
-            className="grid gap-x-4 gap-y-6"
-            style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-            }}
+            className="grid gap-x-4 gap-y-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
           >
             {faces.map((piece) => {
               const img = piece.imageDetail ?? piece.imageFull;
+              if (!img) return null;
 
               return (
-                <Link key={piece.slug} href={`/artwork/${piece.slug}`} className="group">
+                <Link
+                  key={piece.slug}
+                  href={`/artwork/${piece.slug}`}
+                  className="group"
+                >
                   <div className="relative w-full aspect-[3/4] overflow-hidden border border-stone-200 bg-transparent">
                     <Image
                       src={img}
                       alt={piece.title}
                       fill
-                      sizes="140px"
-                      className="object-cover"
+                      sizes="(max-width: 768px) 50vw,
+                             (max-width: 1024px) 33vw,
+                             (max-width: 1280px) 25vw,
+                             16vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                   </div>
 
