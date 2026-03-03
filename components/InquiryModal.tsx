@@ -31,16 +31,12 @@ export default function InquiryModal({
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const subject = useMemo(
-    () => `Inquiry: ${artworkTitle}`,
-    [artworkTitle]
-  );
+  const subject = useMemo(() => `Inquiry: ${artworkTitle}`, [artworkTitle]);
 
   useEffect(() => {
     if (!open) return;
     setSent(false);
     setError(null);
-    // lock background scroll
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -56,7 +52,7 @@ export default function InquiryModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSending(true);
     setError(null);
@@ -76,23 +72,22 @@ export default function InquiryModal({
         message,
       });
 
+      // Netlify expects POSTs to hit the site origin path
       const res = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
       });
 
-      if (!res.ok) {
-        throw new Error(`Request failed (${res.status})`);
-      }
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
 
       setSent(true);
       setName("");
       setEmail("");
       setMessage("");
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : String(error);
-      setError(message);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(msg);
     } finally {
       setSending(false);
     }
@@ -111,25 +106,26 @@ export default function InquiryModal({
         className="absolute inset-0 bg-black/40"
         onClick={onClose}
         aria-label="Close inquiry modal"
+        type="button"
       />
 
       {/* Modal */}
-        <div className="relative w-full max-w-xl rounded-lg bg-white shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+      <div className="relative w-full max-w-xl rounded-lg bg-white shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
         <div className="flex items-start justify-between px-6 pt-6">
-            <div className="text-left">
+          <div className="text-left">
             <div className="text-[11px] uppercase tracking-[0.18em] text-stone-500">
-                Inquiry
+              Inquiry
             </div>
             <div className="mt-2 text-lg text-stone-900 leading-tight">
-                {artworkTitle}
+              {artworkTitle}
             </div>
-
-            </div>
+          </div>
 
           <button
             onClick={onClose}
             className="text-stone-400 hover:text-stone-700"
             aria-label="Close"
+            type="button"
           >
             ✕
           </button>
@@ -141,12 +137,36 @@ export default function InquiryModal({
               Sent. I’ll respond as soon as I can.
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form
+              name="artwork-inquiry"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={onSubmit}
+              className="space-y-4"
+            >
+              {/* Netlify form identifier */}
+              <input type="hidden" name="form-name" value="artwork-inquiry" />
+
+              {/* Honeypot (must exist in the HTML) */}
+              <p className="hidden">
+                <label>
+                  Don’t fill this out: <input name="bot-field" />
+                </label>
+              </p>
+
+              {/* Context fields (keep hidden but present) */}
+              <input type="hidden" name="artworkTitle" value={artworkTitle} />
+              <input type="hidden" name="artworkSlug" value={artworkSlug} />
+              <input type="hidden" name="series" value={series} />
+              <input type="hidden" name="pageUrl" value={pageUrl} />
+
               <div>
                 <label className="block text-left text-xs text-stone-600 mb-1">
                   Name *
                 </label>
                 <input
+                  name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -159,6 +179,7 @@ export default function InquiryModal({
                   Email *
                 </label>
                 <input
+                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -172,6 +193,7 @@ export default function InquiryModal({
                   Message
                 </label>
                 <textarea
+                  name="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
@@ -180,9 +202,7 @@ export default function InquiryModal({
                 />
               </div>
 
-              {error && (
-                <div className="text-xs text-red-600">{error}</div>
-              )}
+              {error && <div className="text-xs text-red-600">{error}</div>}
 
               <div className="flex items-center justify-between pt-2">
                 <a
