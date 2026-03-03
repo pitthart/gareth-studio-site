@@ -31,7 +31,7 @@ export default function TotemPage() {
         <section aria-label="Totem works">
           <div className="grid gap-x-8 gap-y-14 md:grid-cols-3">
             {firstSix.map((piece) => (
-              <ArtworkCard key={piece.slug} piece={piece} actionLabel="Inquire" />
+              <ArtworkCard key={piece.slug} piece={piece} />
             ))}
           </div>
         </section>
