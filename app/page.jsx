@@ -10,7 +10,7 @@ export default function HomePage() {
         {/* SERIES */}
         <section className="mt-24 md:mt-12">
           <div className="text-center">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-stone-500 leading-none">
+            <div className="text-[12px] uppercase tracking-[0.18em] text-stone-500 leading-none">
               Series
             </div>
             <div className="mt-2 text-[13px] text-stone-600 leading-snug">
@@ -66,7 +66,7 @@ export default function HomePage() {
           {/* Centered label + copy (like Series) */}
           <div className="mt-6 flex justify-center text-center">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-stone-500 leading-none">
+              <div className="text-[12px] uppercase tracking-[0.18em] text-stone-500 leading-none">
                 Studio
               </div>
               <div className="mt-2 text-[13px] text-stone-600 leading-snug">

@@ -31,7 +31,7 @@ export default function SeriesPage() {
               href="/work/archive"
               className="text-[18px] md:text-medium text-stone-500 hover:text-stone-900 transition-colors"
             >
-              Archive
+              Other Work
             </Link>
           </div>
         </div>

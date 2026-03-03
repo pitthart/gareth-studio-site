@@ -66,7 +66,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
         <div className="grid gap-12 md:grid-cols-[3fr,2fr] md:items-start">
           {/* Image */}
           <div className="relative">
-            <div className="rounded-[10px] bg-stone-200/60 p-4 md:p-5 ring-1 ring-stone-200">
+            <div className="rounded-[10px]">
               <ArtworkImageWithLightbox src={fullSrc} alt={piece.title} />
             </div>
           </div>

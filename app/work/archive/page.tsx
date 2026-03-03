@@ -8,19 +8,16 @@ export default function ArchivePage() {
         {/* BREADCRUMB */}
         <div className="mb-5 text-xs text-stone-500">
           <Link href="/work" className="hover:text-stone-700">
-            Work
+            Series
           </Link>
           <span className="mx-2">/</span>
-          <span>Archive</span>
+          <span>Other Work</span>
         </div>
 
-        <header className="mb-14">
+        <header className="mb-8">
           <h1 className="text-[26px] md:text-[30px] font-normal mb-1 leading-tight text-stone-900">
-            Archive
+            Other Work
           </h1>
-          <p className="text-xs md:text-sm text-stone-600 max-w-2xl leading-tight">
-            Earlier works. Record.
-          </p>
         </header>
 
         <section className="space-y-8">
@@ -43,7 +40,7 @@ export default function ArchivePage() {
                 Faces
               </Link>
               <div className="mt-[1px] text-[11px] text-stone-500 leading-tight max-w-2xl">
-                A previous body of work.
+                Early portraits on canvas and paper
               </div>
             </div>
           </div>

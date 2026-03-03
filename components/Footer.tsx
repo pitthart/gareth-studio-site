@@ -27,7 +27,7 @@ export default function Footer() {
                   href="/work/archive"
                   className="text-stone-500 hover:text-stone-800"
                 >
-                  Archive
+                  Other Work
                 </Link>
               </li>
             </ul>
@@ -77,7 +77,7 @@ export default function Footer() {
 
           {/* COPYRIGHT */}
           <div className="flex items-end md:justify-end">
-            <div className="text-sm text-stone-500">
+            <div className="text-xxsmall text-stone-500">
               © {new Date().getFullYear()} Gareth Pitt-Hart
             </div>
           </div>

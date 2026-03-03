@@ -11,11 +11,11 @@ export default function FacesArchivePage() {
         {/* Breadcrumb */}
         <div className="mb-8 text-xs text-stone-500">
           <Link href="/work" className="hover:text-stone-700">
-            Work
+            Series
           </Link>
           <span className="mx-2">/</span>
           <Link href="/work/archive" className="hover:text-stone-700">
-            Archive
+            Other Works
           </Link>
           <span className="mx-2">/</span>
           <span>Faces</span>
@@ -27,7 +27,7 @@ export default function FacesArchivePage() {
             Faces
           </h1>
           <p className="text-sm text-stone-600 leading-relaxed">
-            Earlier work. Record.
+            Early portraits on canvas and paper
           </p>
         </header>
 
