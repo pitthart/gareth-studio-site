@@ -7,6 +7,7 @@ import NetlifyInquiryForm from "@/components/NetlifyInquiryForm";
 
 
 
+
 export const metadata: Metadata = {
   title: "Gareth Pitt-Hart",
   description: "Painting on cardboard, paper, and found surfaces.",
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <NetlifyInquiryForm />
         <Header />
         <main className="min-h-screen bg-stone-100">
           {children}
