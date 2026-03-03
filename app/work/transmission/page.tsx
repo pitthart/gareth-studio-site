@@ -45,7 +45,7 @@ export default function TransmissionPage() {
               </summary>
               <div className="mt-10 grid gap-x-8 gap-y-14 md:grid-cols-3">
                 {rest.map((piece) => (
-                  <ArtworkCard key={piece.slug} piece={piece} actionLabel="Inquire" />
+                  <ArtworkCard key={piece.slug} piece={piece} />
                 ))}
               </div>
             </details>
