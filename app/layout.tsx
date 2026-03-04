@@ -18,14 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Netlify form must exist once in built HTML */}
         <NetlifyInquiryForm />
 
         <Header />
 
-        <main className="min-h-screen bg-stone-100">
-          {children}
-        </main>
+        <main className="min-h-screen bg-stone-100">{children}</main>
 
         <Footer />
       </body>

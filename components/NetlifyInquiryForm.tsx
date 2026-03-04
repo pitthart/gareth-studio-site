@@ -5,25 +5,29 @@ export default function NetlifyInquiryForm() {
       name="artwork-inquiry"
       method="POST"
       data-netlify="true"
-      netlify-honeypot="company"
+      data-netlify-honeypot="bot-field"
       hidden
     >
-      {/* Netlify requires this hidden input */}
+      {/* Netlify form identifier */}
       <input type="hidden" name="form-name" value="artwork-inquiry" />
 
       {/* Honeypot */}
-      <input name="company" />
+      <p hidden>
+        <label>
+          Don’t fill this out: <input name="bot-field" />
+        </label>
+      </p>
 
       {/* Context fields */}
-      <input type="text" name="artworkTitle" />
-      <input type="text" name="artworkSlug" />
-      <input type="text" name="series" />
-      <input type="text" name="pageUrl" />
+      <input type="hidden" name="artworkTitle" />
+      <input type="hidden" name="artworkSlug" />
+      <input type="hidden" name="series" />
+      <input type="hidden" name="pageUrl" />
 
       {/* User fields */}
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <textarea name="message" />
+      <input type="hidden" name="name" />
+      <input type="hidden" name="email" />
+      <textarea name="message" hidden />
     </form>
   );
 }

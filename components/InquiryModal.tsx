@@ -1,7 +1,7 @@
 // components/InquiryModal.tsx
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Props = {
   open: boolean;
@@ -28,16 +28,12 @@ export default function InquiryModal({
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const iframeName = "netlify-inquiry-target";
-
   const subject = useMemo(() => `Inquiry: ${artworkTitle}`, [artworkTitle]);
 
   useEffect(() => {
     if (!open) return;
     setSent(false);
     setError(null);
-
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -53,23 +49,39 @@ export default function InquiryModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  // When the hidden iframe receives a response, treat it as "sent"
-  function onIFrameLoad() {
-    if (!sending) return;
-    setSending(false);
-    setSent(true);
-
-    // clear fields
-    setName("");
-    setEmail("");
-    setMessage("");
-    setError(null);
-  }
-
-  function onSubmit(_e: React.FormEvent<HTMLFormElement>) {
-    // IMPORTANT: do NOT prevent default; we WANT a normal form POST for Netlify
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setSending(true);
     setError(null);
+
+    try {
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+
+      // Make sure required Netlify identifier exists in the payload
+      formData.set("form-name", "artwork-inquiry");
+
+      // IMPORTANT: post to current path to avoid redirects dropping the body
+      const action = window.location.pathname;
+
+      const res = await fetch(action, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+
+      setSent(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(msg);
+    } finally {
+      setSending(false);
+    }
   }
 
   if (!open) return null;
@@ -80,14 +92,6 @@ export default function InquiryModal({
       aria-modal="true"
       role="dialog"
     >
-      {/* Hidden iframe target to avoid full-page navigation */}
-      <iframe
-        name={iframeName}
-        className="hidden"
-        onLoad={onIFrameLoad}
-        title="Netlify form target"
-      />
-
       {/* Backdrop */}
       <button
         className="absolute inset-0 bg-black/40"
@@ -125,33 +129,24 @@ export default function InquiryModal({
             </div>
           ) : (
             <form
-              ref={formRef}
               name="artwork-inquiry"
               method="POST"
-              // CRITICAL: no action="/" (avoids www/apex or http/https redirects dropping POST body)
               data-netlify="true"
-              data-netlify-honeypot="company"
-              target={iframeName}
+              data-netlify-honeypot="bot-field"
               onSubmit={onSubmit}
               className="space-y-4"
             >
-              {/* Required by Netlify */}
+              {/* Netlify form identifier */}
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
-              {/* Honeypot (must exist in HTML) */}
-              <div className="hidden" aria-hidden="true">
+              {/* Honeypot */}
+              <p className="hidden">
                 <label>
-                  Company{" "}
-                  <input
-                    name="company"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    defaultValue=""
-                  />
+                  Don’t fill this out: <input name="bot-field" />
                 </label>
-              </div>
+              </p>
 
-              {/* Context fields (hidden but present) */}
+              {/* Context fields */}
               <input type="hidden" name="artworkTitle" value={artworkTitle} />
               <input type="hidden" name="artworkSlug" value={artworkSlug} />
               <input type="hidden" name="series" value={series} />
