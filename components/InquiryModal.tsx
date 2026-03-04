@@ -1,7 +1,7 @@
 // components/InquiryModal.tsx
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   open: boolean;
@@ -11,10 +11,6 @@ type Props = {
   series: string;
   pageUrl: string; // pass window.location.href from caller
 };
-
-function encode(data: Record<string, string>) {
-  return new URLSearchParams(data).toString();
-}
 
 export default function InquiryModal({
   open,
@@ -27,9 +23,13 @@ export default function InquiryModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const iframeName = "netlify-inquiry-target";
 
   const subject = useMemo(() => `Inquiry: ${artworkTitle}`, [artworkTitle]);
 
@@ -54,50 +54,26 @@ export default function InquiryModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  // When the hidden iframe receives a response, treat it as "sent"
+  function onIFrameLoad() {
+    if (!sending) return;
+    setSending(false);
+    setSent(true);
+
+    // clear fields
+    setName("");
+    setEmail("");
+    setMessage("");
+    setError(null);
+  }
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    // IMPORTANT: do NOT prevent default; we WANT a normal form POST for Netlify
     setSending(true);
     setError(null);
 
-    try {
-      const body = encode({
-        "form-name": "artwork-inquiry",
-        "bot-field": "",
-
-        artworkTitle,
-        artworkSlug,
-        series,
-        pageUrl,
-
-        name,
-        email,
-        message,
-      });
-
-      // IMPORTANT:
-      // Posting to "/" can get 301/302 redirected (www <-> apex, http <-> https),
-      // which can drop the POST body. Post to the current pathname instead.
-      const action =
-        typeof window !== "undefined" ? window.location.pathname : "/";
-
-      const res = await fetch(action, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
-      });
-
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-
-      setSent(true);
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      setError(msg);
-    } finally {
-      setSending(false);
-    }
+    // If you want basic client validation beyond required fields, do it here.
+    // (But keep default submission.)
   }
 
   if (!open) return null;
@@ -108,6 +84,14 @@ export default function InquiryModal({
       aria-modal="true"
       role="dialog"
     >
+      {/* Hidden iframe target to avoid full-page navigation */}
+      <iframe
+        name={iframeName}
+        className="hidden"
+        onLoad={onIFrameLoad}
+        title="Netlify form target"
+      />
+
       {/* Backdrop */}
       <button
         className="absolute inset-0 bg-black/40"
@@ -145,14 +129,17 @@ export default function InquiryModal({
             </div>
           ) : (
             <form
+              ref={formRef}
               name="artwork-inquiry"
               method="POST"
+              action="/"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
+              target={iframeName}
               onSubmit={onSubmit}
               className="space-y-4"
             >
-              {/* Netlify form identifier */}
+              {/* Required by Netlify */}
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
               {/* Honeypot (must exist in HTML) */}
