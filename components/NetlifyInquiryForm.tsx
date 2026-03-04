@@ -5,14 +5,14 @@ export default function NetlifyInquiryForm() {
       name="artwork-inquiry"
       method="POST"
       data-netlify="true"
-      netlify-honeypot="bot-field"
+      netlify-honeypot="company"
       hidden
     >
       {/* Netlify requires this hidden input */}
       <input type="hidden" name="form-name" value="artwork-inquiry" />
 
       {/* Honeypot */}
-      <input name="bot-field" />
+      <input name="company" />
 
       {/* Context fields */}
       <input type="text" name="artworkTitle" />

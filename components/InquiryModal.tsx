@@ -38,7 +38,6 @@ export default function InquiryModal({
     setSent(false);
     setError(null);
 
-    // lock background scroll
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -67,13 +66,10 @@ export default function InquiryModal({
     setError(null);
   }
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(_e: React.FormEvent<HTMLFormElement>) {
     // IMPORTANT: do NOT prevent default; we WANT a normal form POST for Netlify
     setSending(true);
     setError(null);
-
-    // If you want basic client validation beyond required fields, do it here.
-    // (But keep default submission.)
   }
 
   if (!open) return null;
@@ -132,9 +128,9 @@ export default function InquiryModal({
               ref={formRef}
               name="artwork-inquiry"
               method="POST"
-              action="/"
+              // CRITICAL: no action="/" (avoids www/apex or http/https redirects dropping POST body)
               data-netlify="true"
-              data-netlify-honeypot="bot-field"
+              data-netlify-honeypot="company"
               target={iframeName}
               onSubmit={onSubmit}
               className="space-y-4"
@@ -143,11 +139,17 @@ export default function InquiryModal({
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
               {/* Honeypot (must exist in HTML) */}
-              <p className="hidden">
+              <div className="hidden" aria-hidden="true">
                 <label>
-                  Don’t fill this out: <input name="bot-field" />
+                  Company{" "}
+                  <input
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    defaultValue=""
+                  />
                 </label>
-              </p>
+              </div>
 
               {/* Context fields (hidden but present) */}
               <input type="hidden" name="artworkTitle" value={artworkTitle} />
