@@ -9,7 +9,7 @@ type Props = {
   artworkTitle: string;
   artworkSlug: string;
   series: string;
-  pageUrl: string; // pass window.location.href from caller
+  pageUrl: string;
 };
 
 export default function InquiryModal({
@@ -52,13 +52,14 @@ export default function InquiryModal({
   }, [open, onClose]);
 
   function onSubmit() {
-    // IMPORTANT: do NOT prevent default
+    // DO NOT preventDefault — we want a real HTML POST so Netlify captures it.
     setSending(true);
   }
 
   function onIFrameLoad() {
-    // iframe loads after submit; treat as success
+    // iframe loads after the POST completes; treat as success
     if (!sending) return;
+
     setSending(false);
     setSent(true);
 
@@ -80,7 +81,7 @@ export default function InquiryModal({
         name={iframeName}
         className="hidden"
         onLoad={onIFrameLoad}
-        title="Netlify inquiry form target"
+        title="Netlify inquiry target"
       />
 
       {/* Backdrop */}
@@ -123,16 +124,16 @@ export default function InquiryModal({
               name="artwork-inquiry"
               method="POST"
               data-netlify="true"
-              netlify-honeypot="bot-field"
-              action="/netlify-forms-success.html"
+              data-netlify-honeypot="bot-field"
+              action="/netlify-forms.html"
               target={iframeName}
               onSubmit={onSubmit}
               className="space-y-4"
             >
-              {/* Netlify required */}
+              {/* Required by Netlify */}
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
-              {/* Honeypot required */}
+              {/* Honeypot (must exist in HTML) */}
               <p className="hidden">
                 <label>
                   Don’t fill this out: <input name="bot-field" />
