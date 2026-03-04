@@ -37,6 +37,8 @@ export default function InquiryModal({
     if (!open) return;
     setSent(false);
     setError(null);
+
+    // lock background scroll
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -72,8 +74,13 @@ export default function InquiryModal({
         message,
       });
 
-      // Netlify expects POSTs to hit the site origin path
-      const res = await fetch("/", {
+      // IMPORTANT:
+      // Posting to "/" can get 301/302 redirected (www <-> apex, http <-> https),
+      // which can drop the POST body. Post to the current pathname instead.
+      const action =
+        typeof window !== "undefined" ? window.location.pathname : "/";
+
+      const res = await fetch(action, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
@@ -148,14 +155,14 @@ export default function InquiryModal({
               {/* Netlify form identifier */}
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
-              {/* Honeypot (must exist in the HTML) */}
+              {/* Honeypot (must exist in HTML) */}
               <p className="hidden">
                 <label>
                   Don’t fill this out: <input name="bot-field" />
                 </label>
               </p>
 
-              {/* Context fields (keep hidden but present) */}
+              {/* Context fields (hidden but present) */}
               <input type="hidden" name="artworkTitle" value={artworkTitle} />
               <input type="hidden" name="artworkSlug" value={artworkSlug} />
               <input type="hidden" name="series" value={series} />
