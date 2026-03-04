@@ -26,14 +26,16 @@ export default function InquiryModal({
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const iframeName = "netlify-inquiry-target";
 
   const subject = useMemo(() => `Inquiry: ${artworkTitle}`, [artworkTitle]);
 
   useEffect(() => {
     if (!open) return;
     setSent(false);
-    setError(null);
+    setSending(false);
+
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -49,39 +51,20 @@ export default function InquiryModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function onSubmit() {
+    // IMPORTANT: do NOT prevent default
     setSending(true);
-    setError(null);
+  }
 
-    try {
-      const form = e.currentTarget;
-      const formData = new FormData(form);
+  function onIFrameLoad() {
+    // iframe loads after submit; treat as success
+    if (!sending) return;
+    setSending(false);
+    setSent(true);
 
-      // Make sure required Netlify identifier exists in the payload
-      formData.set("form-name", "artwork-inquiry");
-
-      // IMPORTANT: post to current path to avoid redirects dropping the body
-      const action = window.location.pathname;
-
-      const res = await fetch(action, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString(),
-      });
-
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-
-      setSent(true);
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      setError(msg);
-    } finally {
-      setSending(false);
-    }
+    setName("");
+    setEmail("");
+    setMessage("");
   }
 
   if (!open) return null;
@@ -92,6 +75,14 @@ export default function InquiryModal({
       aria-modal="true"
       role="dialog"
     >
+      {/* Hidden iframe target so we don't navigate away */}
+      <iframe
+        name={iframeName}
+        className="hidden"
+        onLoad={onIFrameLoad}
+        title="Netlify inquiry form target"
+      />
+
       {/* Backdrop */}
       <button
         className="absolute inset-0 bg-black/40"
@@ -132,14 +123,16 @@ export default function InquiryModal({
               name="artwork-inquiry"
               method="POST"
               data-netlify="true"
-              data-netlify-honeypot="bot-field"
+              netlify-honeypot="bot-field"
+              action="/netlify-forms-success.html"
+              target={iframeName}
               onSubmit={onSubmit}
               className="space-y-4"
             >
-              {/* Netlify form identifier */}
+              {/* Netlify required */}
               <input type="hidden" name="form-name" value="artwork-inquiry" />
 
-              {/* Honeypot */}
+              {/* Honeypot required */}
               <p className="hidden">
                 <label>
                   Don’t fill this out: <input name="bot-field" />
@@ -192,8 +185,6 @@ export default function InquiryModal({
                   placeholder="Optional"
                 />
               </div>
-
-              {error && <div className="text-xs text-red-600">{error}</div>}
 
               <div className="flex items-center justify-between pt-2">
                 <a
