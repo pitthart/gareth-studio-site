@@ -2,9 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Gareth Pitt-Hart | Abstract Painter",
+  description:
+    "Gareth Pitt-Hart is an abstract painter based in St. Louis, Missouri, working with cardboard, canvas, and layered materials exploring trace, entropy, gesture, and decay.",
+};
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-stone-100">
+      <h1 className="sr-only">
+        Gareth Pitt-Hart — Abstract painter based in St. Louis, Missouri
+      </h1>
 
       <div className="mx-auto max-w-5xl px-6 pt-10 pb-16 md:px-10 md:pt-12 md:pb-20">
         {/* SERIES */}
@@ -58,12 +67,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* more separation between sections */}
         <div className="mt-20 md:mt-36" />
 
         {/* STUDIO */}
         <section className="mt-12">
-          {/* Centered label + copy (like Series) */}
           <div className="mt-6 flex justify-center text-center">
             <div>
               <div className="text-[12px] uppercase tracking-[0.18em] text-stone-500 leading-none">
@@ -76,9 +83,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4 border-t border-stone-200 flex items-center justify-between">
-            {/* keep the line simple; put view subtly to the right */}
             <span />
-           
           </div>
 
           <div className="mt-5">

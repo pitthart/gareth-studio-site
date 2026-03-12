@@ -6,8 +6,12 @@ import Footer from "@/components/Footer";
 import NetlifyInquiryForm from "@/components/NetlifyInquiryForm";
 
 export const metadata: Metadata = {
-  title: "Gareth Pitt-Hart",
-  description: "Painting on cardboard, paper, and found surfaces.",
+  title: "Gareth Pitt-Hart | Abstract Painter",
+  description:
+    "Gareth Pitt-Hart is an abstract painter based in St. Louis working with cardboard, canvas, and layered materials exploring trace, entropy, and gesture.",
+  verification: {
+    google: "LQWVCmek4lSLYcN5OLVj9w8OimSF6WE1LhQPry2O74k",
+  },
 };
 
 export default function RootLayout({
