@@ -21,13 +21,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Gareth Pitt-Hart",
+              jobTitle: "Abstract Painter",
+              url: "https://garethpitthart.com",
+              image: "https://garethpitthart.com/studio-hero.jpg",
+              homeLocation: {
+                "@type": "Place",
+                name: "St. Louis, Missouri",
+              },
+              sameAs: [
+                "https://www.linkedin.com/in/garethpitthart"
+              ],
+            }),
+          }}
+        />
+      </head>
+
       <body>
         <NetlifyInquiryForm />
-
         <Header />
-
         <main className="min-h-screen bg-stone-100">{children}</main>
-
         <Footer />
       </body>
     </html>

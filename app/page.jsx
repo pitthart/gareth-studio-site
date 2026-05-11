@@ -5,25 +5,63 @@ import Link from "next/link";
 export const metadata = {
   title: "Gareth Pitt-Hart | Abstract Painter",
   description:
-    "Gareth Pitt-Hart is an abstract painter based in St. Louis, Missouri, working with cardboard, canvas, and layered materials exploring trace, entropy, gesture, and decay.",
+    "Gareth Pitt-Hart is an abstract painter based in Saint Louis, working with canvas, cardboard, paper, and layered materials exploring trace, pressure, erosion, and repetition.",
 };
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-stone-100">
       <h1 className="sr-only">
-        Gareth Pitt-Hart — Abstract painter based in St. Louis, Missouri
+        Gareth Pitt-Hart — Abstract painter based in Saint Louis
       </h1>
 
-      <div className="mx-auto max-w-5xl px-6 pt-10 pb-16 md:px-10 md:pt-12 md:pb-20">
+      {/* HERO / NEW WORK */}
+      <section className="relative h-screen min-h-[720px] w-full overflow-hidden bg-stone-900">
+        <Image
+          src="/new-work-hero1.png"
+          alt="New large-scale black and white painting by Gareth Pitt-Hart"
+          fill
+          priority
+          className="object-cover opacity-95"
+        />
+
+        <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+          <div className="max-w-6xl text-white">
+            <div className="mb-8 text-[16px] font-bold uppercase tracking-[0.24em] text-white">
+              NEW WORK
+            </div>
+
+            <div className="text-[44px] leading-none md:text-[72px] font-bold uppercase tracking-[0.02em]">
+              GARETH PITT-HART
+            </div>
+
+            <div className="mt-7 text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
+              MAY 2026 · SAINT LOUIS
+            </div>
+
+            <div className="mt-10">
+              <Link
+                href="/new-work"
+                className="text-sm font-semibold uppercase tracking-[0.18em] text-white hover:opacity-70 transition-opacity"
+              >
+                VIEW WORK →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTENT */}
+      <div className="mx-auto max-w-5xl px-6 pt-20 pb-24 md:px-10 md:pt-28 md:pb-32">
         {/* SERIES */}
-        <section className="mt-24 md:mt-12">
+        <section>
           <div className="text-center">
             <div className="text-[12px] uppercase tracking-[0.18em] text-stone-500 leading-none">
-              Series
+              SERIES
             </div>
+
             <div className="mt-2 text-[13px] text-stone-600 leading-snug">
-              Paintings formed through repetition, pressure, and revision.
+              Earlier bodies of work formed through repetition, pressure, and revision.
             </div>
           </div>
 
@@ -32,25 +70,25 @@ export default function HomePage() {
           <div className="mt-6 flex justify-center">
             <div className="w-full max-w-4xl">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 text-center">
-                <Link href="/work/totem" className="group flex justify-center">
-                  <div className="w-full max-w-[420px] text-center">
-                    <div className="relative h-[160px] md:h-[200px] bg-stone-200 overflow-hidden rounded-lg border border-stone-200">
-                      <Image
-                        src="/totem-thumb.jpg"
-                        alt="Totem"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
+                {/* TOTEM */}
+                <Link href="/work/totem" className="group block">
+                  <div className="relative h-[140px] md:h-[180px] bg-stone-200 overflow-hidden rounded-lg border border-stone-200">
+                    <Image
+                      src="/totem-thumb.jpg"
+                      alt="Totem"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-                    <div className="mt-3 text-xl md:text-2xl text-stone-900 group-hover:opacity-70 transition-opacity">
-                      Totem
-                    </div>
+                  <div className="mt-3 text-lg md:text-xl text-stone-900 group-hover:opacity-70 transition-opacity">
+                    Totem
                   </div>
                 </Link>
 
-                <Link href="/work/transmission" className="block group">
-                  <div className="relative h-[160px] md:h-[200px] bg-stone-200 overflow-hidden rounded-lg border border-stone-200">
+                {/* TRANSMISSION */}
+                <Link href="/work/transmission" className="group block">
+                  <div className="relative h-[140px] md:h-[180px] bg-stone-200 overflow-hidden rounded-lg border border-stone-200">
                     <Image
                       src="/transmission-thumb.jpg"
                       alt="Transmission"
@@ -58,45 +96,13 @@ export default function HomePage() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="mt-3 text-xl md:text-2xl text-stone-900 group-hover:opacity-70 transition-opacity">
+
+                  <div className="mt-3 text-lg md:text-xl text-stone-900 group-hover:opacity-70 transition-opacity">
                     Transmission
                   </div>
                 </Link>
               </div>
             </div>
-          </div>
-        </section>
-
-        <div className="mt-20 md:mt-36" />
-
-        {/* STUDIO */}
-        <section className="mt-12">
-          <div className="mt-6 flex justify-center text-center">
-            <div>
-              <div className="text-[12px] uppercase tracking-[0.18em] text-stone-500 leading-none">
-                Studio
-              </div>
-              <div className="mt-2 text-[13px] text-stone-600 leading-snug">
-                Notes. Fragments. In progress.
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-4 border-t border-stone-200 flex items-center justify-between">
-            <span />
-          </div>
-
-          <div className="mt-5">
-            <Link href="/studio" className="block">
-              <div className="relative h-[220px] md:h-[300px] overflow-hidden bg-stone-200 rounded-lg border border-stone-200">
-                <Image
-                  src="/studio-hero.jpg"
-                  alt="Studio"
-                  fill
-                  className="object-cover contrast-80 brightness-95"
-                />
-              </div>
-            </Link>
           </div>
         </section>
       </div>
