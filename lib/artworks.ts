@@ -1,6 +1,11 @@
 // lib/artworks.ts
 
-export type SeriesSlug = "totem" | "transmission" | "faces" | "studies";
+export type SeriesSlug =
+  | "totem"
+  | "transmission"
+  | "circles"
+  | "faces"
+  | "studies";
 
 export type Artwork = {
   slug: string;
@@ -11,8 +16,8 @@ export type Artwork = {
   medium?: string;
   size?: string;
 
-  imageDetail: string; // used on series grids (closeup)
-  imageFull: string;   // used on artwork page (full view)
+  imageDetail: string; // used on series grids
+  imageFull: string; // used on artwork page
 
   note?: string;
 
@@ -31,18 +36,28 @@ export const seriesMeta: Record<
       "Vertical structures built through rhythm, repetition, and stacked symbols.",
     coverImage: "/art/totem/cover.jpg",
   },
+
   transmission: {
     title: "Transmission",
     description:
       "Signal, drift, and interruption—marks relayed across seams and surfaces.",
     coverImage: "/art/transmission/cover.jpg",
   },
+
+  circles: {
+    title: "Circles",
+    description:
+      "Works on aged newsprint exploring repetition, orbit, mark, pressure, color, and time.",
+    coverImage: "/art/circles/circle-01.png",
+  },
+
   faces: {
     title: "Faces",
     description:
       "Symbolic portraits and emotional masks—half diagram, half confession.",
     coverImage: "/art/faces/cover.jpg",
   },
+
   studies: {
     title: "Studies",
     description:
@@ -198,13 +213,31 @@ export const artworks: Artwork[] = [
     title: "Transmission 06",
     series: "transmission",
     year: "2025",
-    medium: "Oil on Canvas",
+    medium: "Oil on canvas",
     size: "36 × 24 in",
     imageDetail: "/art/transmission/transmission-06-detail.jpg",
     imageFull: "/art/transmission/transmission-06-full.jpg",
     isPublic: true,
     order: 60,
   },
+
+  // --- CIRCLES ---
+  ...Array.from({ length: 30 }, (_, index): Artwork => {
+    const number = String(index + 1).padStart(2, "0");
+
+    return {
+      slug: `circle-${number}`,
+      title: `Circle ${number}`,
+      series: "circles",
+      year: "2015",
+      medium: "Mixed media on aged newsprint",
+      size: "18 × 24 in",
+      imageDetail: `/art/circles/circle-${number}.png`,
+      imageFull: `/art/circles/circle-${number}.png`,
+      isPublic: true,
+      order: (index + 1) * 10,
+    };
+  }),
 
   // --- FACES ---
   {
@@ -230,7 +263,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-02-full.jpg",
     isPublic: true,
     order: 20,
-  },{
+  },
+  {
     slug: "faces-03",
     title: "Face III",
     series: "faces",
@@ -241,7 +275,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-03-full.jpg",
     isPublic: true,
     order: 30,
-  },{
+  },
+  {
     slug: "faces-04",
     title: "Face IV",
     series: "faces",
@@ -252,7 +287,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-04-full.jpg",
     isPublic: true,
     order: 40,
-  },{
+  },
+  {
     slug: "faces-05",
     title: "Face V",
     series: "faces",
@@ -263,7 +299,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-05-full.jpg",
     isPublic: true,
     order: 50,
-  },{
+  },
+  {
     slug: "faces-06",
     title: "Face VI",
     series: "faces",
@@ -274,7 +311,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-06-full.jpg",
     isPublic: true,
     order: 60,
-  },{
+  },
+  {
     slug: "faces-07",
     title: "Face VII",
     series: "faces",
@@ -285,7 +323,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-07-full.jpg",
     isPublic: true,
     order: 70,
-  },{
+  },
+  {
     slug: "faces-08",
     title: "Face VIII",
     series: "faces",
@@ -296,7 +335,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-08-full.jpg",
     isPublic: true,
     order: 80,
-  },{
+  },
+  {
     slug: "faces-09",
     title: "Face IX",
     series: "faces",
@@ -307,7 +347,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-09-full.jpg",
     isPublic: true,
     order: 90,
-  },{
+  },
+  {
     slug: "faces-10",
     title: "Face X",
     series: "faces",
@@ -318,7 +359,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-10-full.jpg",
     isPublic: true,
     order: 100,
-  },{
+  },
+  {
     slug: "faces-11",
     title: "Face XI",
     series: "faces",
@@ -329,7 +371,8 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-11-full.jpg",
     isPublic: true,
     order: 110,
-  },{
+  },
+  {
     slug: "faces-12",
     title: "Face XII",
     series: "faces",
@@ -352,12 +395,10 @@ export const artworks: Artwork[] = [
     imageFull: "/art/faces/faces-13-full.jpg",
     isPublic: true,
     order: 130,
-  }
-  
-  // (remaining faces entries unchanged for brevity — yours are already correct)
+  },
 ];
 
-// 🔒 Hardened slug lookup (important improvement)
+// Hardened slug lookup
 export function getArtworkBySlug(slug: string): Artwork | undefined {
   const s = decodeURIComponent(slug).trim().toLowerCase();
   return artworks.find((a) => a.slug.trim().toLowerCase() === s);

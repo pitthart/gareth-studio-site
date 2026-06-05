@@ -4,14 +4,14 @@ import Link from "next/link";
 export const metadata = {
   title: "Work | Gareth Pitt-Hart",
   description:
-    "Selected bodies of work by Gareth Pitt-Hart, including Totem, Transmission, and related abstract paintings exploring pressure, trace, erosion, restraint, and vertical form.",
+    "Selected bodies of work by Gareth Pitt-Hart, including Totem, Transmission, Circles, and related abstract paintings exploring pressure, trace, erosion, restraint, repetition, and vertical form.",
   alternates: {
     canonical: "/work",
   },
   openGraph: {
     title: "Work | Gareth Pitt-Hart",
     description:
-      "Selected bodies of abstract painting by Gareth Pitt-Hart, including Totem, Transmission, and related work.",
+      "Selected bodies of abstract painting by Gareth Pitt-Hart, including Totem, Transmission, Circles, and related work.",
     url: "https://garethpitthart.com/work",
     siteName: "Gareth Pitt-Hart",
     type: "website",
@@ -20,11 +20,11 @@ export const metadata = {
     card: "summary",
     title: "Work | Gareth Pitt-Hart",
     description:
-      "Selected bodies of abstract painting by Gareth Pitt-Hart, including Totem, Transmission, and related work.",
+      "Selected bodies of abstract painting by Gareth Pitt-Hart, including Totem, Transmission, Circles, and related work.",
   },
 };
 
-export default function SeriesPage() {
+export default function WorkPage() {
   return (
     <div className="px-6 pt-10 pb-28">
       <div className="mx-auto max-w-5xl px-0 pb-24 md:px-10">
@@ -34,7 +34,7 @@ export default function SeriesPage() {
           </h1>
 
           <p className="max-w-2xl text-xs leading-tight text-stone-600 md:text-sm">
-            Totem. Transmission.
+            Totem. Transmission. Circles.
           </p>
         </header>
 
@@ -85,6 +85,31 @@ export default function SeriesPage() {
 
               <div className="mt-[1px] text-[11px] leading-tight text-stone-500">
                 Signal. Drift. Interruption.
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="relative h-[64px] w-[52px] shrink-0 overflow-hidden rounded-md border border-stone-200 bg-stone-200">
+              <Image
+                src="/art/circles/cover.jpg"
+                alt="Cover image for the Circles series by Gareth Pitt-Hart"
+                fill
+                sizes="52px"
+                className="object-cover"
+              />
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <Link
+                href="/work/circles"
+                className="text-lg leading-tight text-stone-900 transition-opacity hover:opacity-70 md:text-xl"
+              >
+                Circles
+              </Link>
+
+              <div className="mt-[1px] text-[11px] leading-tight text-stone-500">
+                Newsprint. Repetition. Time.
               </div>
             </div>
           </div>

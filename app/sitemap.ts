@@ -50,6 +50,11 @@ const routes: SitemapRoute[] = [
     priority: 0.6,
     changeFrequency: "yearly",
   },
+  {
+  path: "/work/circles",
+  priority: 0.75,
+  changeFrequency: "yearly",
+  },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
