@@ -5,14 +5,14 @@ import { useState } from "react";
 export default function NewWorkInquiry({ work }) {
   const [open, setOpen] = useState(false);
 
-  const inquirySubject = `New Work ${work.title}`;
+  const inquirySubject = `Threshold ${work.title}`;
 
   return (
     <div className="mt-8 border-t border-stone-200 pt-5">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <div className="mb-2 text-[10px] uppercase tracking-[0.22em] text-stone-500">
-            New Work
+            THRESHOLD
           </div>
 
           <h2 className="text-[15px] font-normal text-stone-900">

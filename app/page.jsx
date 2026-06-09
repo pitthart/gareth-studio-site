@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
           <div className="max-w-6xl text-white">
             <div className="mb-8 text-[16px] font-bold uppercase tracking-[0.24em] text-white">
-              NEW WORK
+              NEW PAINTINGS - THRESHOLD SERIES
             </div>
 
             <div className="text-[44px] leading-none md:text-[72px] font-bold uppercase tracking-[0.02em]">
@@ -36,7 +36,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-7 text-[15px] font-semibold uppercase tracking-[0.16em] text-white">
-              MAY 2026 · SAINT LOUIS
+              JUNE 2026 · SAINT LOUIS
             </div>
 
             <div className="mt-10">

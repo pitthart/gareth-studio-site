@@ -13,6 +13,12 @@ export default function Footer() {
 
             <ul className="space-y-2 text-sm text-stone-800">
               <li>
+                <Link href="/new-work" className="hover:text-stone-950">
+                  Threshold
+                </Link>
+              </li>
+
+              <li>
                 <Link href="/work/totem" className="hover:text-stone-950">
                   Totem
                 </Link>
@@ -24,6 +30,12 @@ export default function Footer() {
                   className="hover:text-stone-950"
                 >
                   Transmission
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/work/circles" className="hover:text-stone-950">
+                  Circles
                 </Link>
               </li>
 
@@ -96,7 +108,7 @@ export default function Footer() {
 
           {/* COPYRIGHT */}
           <div className="flex items-end md:justify-end">
-            <div className="text-xxsmall text-stone-500">
+            <div className="text-xxxsmall text-stone-500">
               © {new Date().getFullYear()} Gareth Pitt-Hart
             </div>
           </div>
