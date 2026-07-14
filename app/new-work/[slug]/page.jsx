@@ -63,6 +63,7 @@ export default async function ThresholdWorkPage({ params }) {
   }
 
   const { previous, next } = getAdjacentThresholdWorks(work.slug);
+  const details = work.details?.slice(0, 2) ?? [];
 
   return (
     <div className="px-6 pt-14 pb-32 md:px-10">
@@ -71,44 +72,50 @@ export default async function ThresholdWorkPage({ params }) {
           <Link href="/work" className="hover:text-stone-800">
             Series
           </Link>
+
           <span className="mx-2">/</span>
+
           <Link href="/new-work" className="hover:text-stone-800">
             Threshold
           </Link>
+
           <span className="mx-2">/</span>
+
           <span>{work.title}</span>
         </div>
 
-        <div className="relative aspect-square overflow-hidden bg-stone-200">
+        <div className="relative aspect-square overflow-hidden bg-transparent">
           <Image
             src={work.image}
             alt={work.imageAlt}
             fill
             priority
             sizes="(min-width: 1024px) 1024px, 100vw"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
 
-        <div
-          className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2"
-          aria-label={`${work.title} painting details`}
-        >
-          {work.details.map((detail) => (
-            <div
-              key={detail.src}
-              className="relative aspect-square overflow-hidden bg-stone-200"
-            >
-              <Image
-                src={detail.src}
-                alt={detail.alt}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
+        {details.length > 0 && (
+          <div
+            className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2"
+            aria-label={`${work.title} painting details`}
+          >
+            {details.map((detail) => (
+              <div
+                key={detail.src}
+                className="relative aspect-square overflow-hidden bg-stone-100"
+              >
+                <Image
+                  src={detail.src}
+                  alt={detail.alt}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         <NewWorkInquiry work={work} />
 

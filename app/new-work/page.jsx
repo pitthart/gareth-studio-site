@@ -5,7 +5,7 @@ import { thresholdWorks } from "@/lib/thresholdWorks";
 export const metadata = {
   title: "Threshold Series | Gareth Pitt-Hart",
   description:
-    "Threshold is a series of recent large-scale abstract paintings by Gareth Pitt-Hart exploring pressure, trace, erosion, restraint, and vertical form.",
+    "Recent large-scale paintings exploring presence, pressure, trace, restraint, and emergence through vertical form.",
   alternates: {
     canonical: "/new-work",
   },
@@ -44,8 +44,7 @@ export default function NewWorkPage() {
           </h1>
 
           <p className="mx-auto max-w-2xl text-[15px] leading-7 text-stone-600">
-            Recent large-scale paintings exploring pressure, trace, erosion,
-            restraint, and vertical form.
+            Recent large-scale works exploring presence, pressure, trace and emergence through vertical form.
           </p>
         </header>
 
